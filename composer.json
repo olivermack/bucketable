@@ -1,0 +1,19 @@
+{
+    "name": "bucketable/bucketable",
+    "type": "library",
+    "description": "Provides simple behavior for data buckets",
+    "keywords": ["behavior", "data", "container"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oliver Mack",
+            "email": "mail@oliver-mack.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": { "Bucketable": "src/Bucketable/" }
+    }
+}
