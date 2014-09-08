@@ -58,7 +58,7 @@ class BucketTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Countable', $this->bucket);
     }
 
-    public function testCanSetAndGetKey()
+    public function testSetAndGetKey()
     {
         $this->bucket->setKey('foo', 'bar');
         $this->assertEquals('bar', $this->bucket->getKey('foo'));
@@ -112,5 +112,43 @@ class BucketTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->bucket->keyIsEmpty('foo'));
         $this->bucket->setKey('foo', 1);
         $this->assertFalse($this->bucket->keyIsEmpty('foo'));
+    }
+
+    public function testIsEmpty()
+    {
+        $this->assertTrue($this->bucket->isEmpty());
+        $this->bucket->setKey('foo', 'bar');
+        $this->assertFalse($this->bucket->isEmpty());
+    }
+
+    public function testOffsetSetAndGet()
+    {
+        $this->bucket['foo'] = 'bar';
+        $this->assertEquals('bar', $this->bucket['foo']);
+    }
+
+    public function testOffsetUnsetAndExists()
+    {
+        $this->assertFalse(isset($this->bucket['foo']));
+        $this->bucket['foo'] = 'bar';
+        $this->assertTrue(isset($this->bucket['foo']));
+
+        unset($this->bucket['foo']);
+        $this->assertFalse(isset($this->bucket['foo']));
+    }
+
+    public function testCount()
+    {
+        $this->assertCount(0, $this->bucket);
+        $this->bucket->setKey('foo', 'bar');
+        $this->assertCount(1, $this->bucket);
+    }
+
+    public function testIterator()
+    {
+        $this->bucket->setKey('foo', 'bar');
+        $iterator = $this->bucket->getIterator();
+        $this->assertInstanceOf('\ArrayIterator', $iterator);
+        $this->assertContains('bar', $iterator);
     }
 }

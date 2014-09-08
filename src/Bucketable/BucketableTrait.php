@@ -144,12 +144,10 @@ trait BucketableTrait
      *
      * @param  string $offset
      * @param  mixed  $value  the payload to store
-     *
-     * @return $this
      */
     public function offsetSet($offset, $value)
     {
-        return $this->setKey($offset, $value);
+        $this->setKey($offset, $value);
     }
 
     /**
