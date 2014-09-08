@@ -38,8 +38,23 @@ class BucketTest extends \PHPUnit_Framework_TestCase
         $this->bucket = new Bucket();
     }
 
-    public function testInterfaceImplementation()
+    public function testBucketableInterfaceImplementation()
     {
         $this->assertInstanceOf('\Bucketable\Bucketable', $this->bucket);
+    }
+
+    public function testArrayAccessInterfaceImplementation()
+    {
+        $this->assertInstanceOf('\ArrayAccess', $this->bucket);
+    }
+
+    public function testIteratorAggregateInterfaceImplementation()
+    {
+        $this->assertInstanceOf('\IteratorAggregate', $this->bucket);
+    }
+
+    public function testCountableInterfaceImplementation()
+    {
+        $this->assertInstanceOf('\Countable', $this->bucket);
     }
 }
