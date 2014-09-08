@@ -57,4 +57,60 @@ class BucketTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('\Countable', $this->bucket);
     }
+
+    public function testCanSetAndGetKey()
+    {
+        $this->bucket->setKey('foo', 'bar');
+        $this->assertEquals('bar', $this->bucket->getKey('foo'));
+    }
+
+    public function testSetKeyProvidesFluentInterface()
+    {
+        $this->assertInstanceOf(get_class($this->bucket), $this->bucket->setKey('foo', 'bar'));
+    }
+
+    public function testGetKeyReturnsGivenDefault()
+    {
+        $this->assertNull($this->bucket->getKey('foo'));
+        $this->assertEquals('bar', $this->bucket->getKey('foo', 'bar'));
+    }
+
+    public function testHasKey()
+    {
+        $this->assertFalse($this->bucket->hasKey('foo'));
+        $this->bucket->setKey('foo', 'bar');
+        $this->assertTrue($this->bucket->hasKey('foo'));
+    }
+
+    public function testRemoveKey()
+    {
+        $this->bucket->setKey('foo', 'bar');
+        $this->bucket->setKey('foo2', 'bar2');
+        $this->bucket->removeKey('foo2');
+        $this->assertFalse($this->bucket->hasKey('foo2'));
+        $this->assertTrue($this->bucket->hasKey('foo'));
+    }
+
+    public function testRemoveKeyProvidesFluentInterface()
+    {
+        $this->assertInstanceOf(get_class($this->bucket), $this->bucket->removeKey('foo'));
+    }
+
+    public function testKeyIsEmpty()
+    {
+        $this->assertTrue($this->bucket->keyIsEmpty('foo'));
+        $this->bucket->setKey('foo', '');
+        $this->assertTrue($this->bucket->keyIsEmpty('foo'));
+        $this->bucket->setKey('foo', array());
+        $this->assertTrue($this->bucket->keyIsEmpty('foo'));
+        $this->bucket->setKey('foo', 0);
+        $this->assertTrue($this->bucket->keyIsEmpty('foo'));
+
+        $this->bucket->setKey('foo', array('bar'));
+        $this->assertFalse($this->bucket->keyIsEmpty('foo'));
+        $this->bucket->setKey('foo', 'a');
+        $this->assertFalse($this->bucket->keyIsEmpty('foo'));
+        $this->bucket->setKey('foo', 1);
+        $this->assertFalse($this->bucket->keyIsEmpty('foo'));
+    }
 }

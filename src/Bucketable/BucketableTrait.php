@@ -96,7 +96,7 @@ trait BucketableTrait
      */
     public function removeKey($key)
     {
-        unset($this->bucketStorage[$offset]);
+        unset($this->bucketStorage[$key]);
 
         return $this;
     }
@@ -110,7 +110,9 @@ trait BucketableTrait
      */
     public function keyIsEmpty($key)
     {
-        return ($this->getKey($key) !== null);
+        $val = $this->getKey($key);
+
+        return empty($val);
     }
 
     /**
