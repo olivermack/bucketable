@@ -46,8 +46,15 @@ trait BucketableTrait
      *
      * @param string $key
      * @param mixed  $data
+     *
+     * @return $this
      */
-    public function setKey($key, $data);
+    public function setKey($key, $data)
+    {
+        $this->bucketStorage[$key] = $data;
+
+        return $this;
+    }
 
     /**
      * Gets the value of the given $key
@@ -56,30 +63,133 @@ trait BucketableTrait
      *
      * @param  string $key
      * @param  mixed  $default
-     * @return mixed
+     *
+     * @return mixed|null
      */
-    public function getKey($key, $default = null);
+    public function getKey($key, $default = null)
+    {
+        if ($this->hasKey($key)) {
+            return $this->bucketStorage[$key];
+        }
+
+        return $default;
+    }
 
     /**
      * Checks if the given $key exists
      *
-     * @param  string  $key
+     * @param  string $key
+     *
      * @return boolean
      */
-    public function hasKey($key);
+    public function hasKey($key)
+    {
+        return isset($this->bucketStorage[$key]);
+    }
+
+    /**
+     * Removes the given $key from the storage
+     *
+     * @param  string $key
+     *
+     * @return $this
+     */
+    public function removeKey($key)
+    {
+        unset($this->bucketStorage[$offset]);
+
+        return $this;
+    }
 
     /**
      * Checks if the given $key is not set or is empty
      *
-     * @param  string  $key
+     * @param  string $key
+     *
      * @return boolean
      */
-    public function keyIsEmpty($key);
+    public function keyIsEmpty($key)
+    {
+        return ($this->getKey($key) !== null);
+    }
 
     /**
      * Checks if the storage is empty
      *
      * @return boolean
      */
-    public function isEmpty();
+    public function isEmpty()
+    {
+        return empty($this->bucketStorage);
+    }
+
+    /**
+     * Gets the value of the given $key
+     *
+     * Returns null if key does not exist.
+     *
+     * @param string $offset
+     *
+     * @return mixed|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getKey($offset);
+    }
+
+    /**
+     * Set the given key in the bucket
+     *
+     * @param  string $offset
+     * @param  mixed  $value  the payload to store
+     *
+     * @return $this
+     */
+    public function offsetSet($offset, $value)
+    {
+        return $this->setKey($offset, $value);
+    }
+
+    /**
+     * Checks if given key is registered
+     *
+     * @param  string $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->hasKey($offset);
+    }
+
+    /**
+     * Remove given offset from storage
+     *
+     * @param  string $offset
+     *
+     * @return $this
+     */
+    public function offsetUnset($offset)
+    {
+        return $this->removeKey($offset);
+    }
+
+    /**
+     * Counts the keys in the storage
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->bucketStorage);
+    }
+
+    /**
+     * Obtain an iterator for the storage
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->bucketStorage);
+    }
 }

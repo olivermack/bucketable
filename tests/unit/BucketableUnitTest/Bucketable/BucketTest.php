@@ -24,55 +24,22 @@
  * THE SOFTWARE.
  */
 
-/**
- * Defining the main Bucketable behavior
- *
- * @package bucketable
- * @author  Oliver Mack
- */
-interface Bucketable extends
-    ArrayAccess,
-    IteratorAggregate,
-    Countable
+namespace BucketableUnitTest\Bucketable;
+
+use Bucketable\Bucket;
+
+class BucketTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Sets $data for the given $key
-     * @param string $key
-     * @param mixed  $data
-     */
-    public function setKey($key, $data);
+    /** @var \Bucketable\Bucketable */
+    private $bucket;
 
-    /**
-     * Gets the value of the given $key
-     *
-     * Returns $default if $key does not exist
-     *
-     * @param  string $key
-     * @param  mixed  $default
-     * @return mixed
-     */
-    public function getKey($key, $default = null);
+    public function setUp()
+    {
+        $this->bucket = new Bucket();
+    }
 
-    /**
-     * Checks if the given $key exists
-     *
-     * @param  string  $key
-     * @return boolean
-     */
-    public function hasKey($key);
-
-    /**
-     * Checks if the given $key is not set or is empty
-     *
-     * @param  string  $key
-     * @return boolean
-     */
-    public function keyIsEmpty($key);
-
-    /**
-     * Checks if the storage is empty
-     *
-     * @return boolean
-     */
-    public function isEmpty();
+    public function testInterfaceImplementation()
+    {
+        $this->assertInstanceOf('\Bucketable\Bucketable', $this->bucket);
+    }
 }

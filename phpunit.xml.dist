@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="Bucketable Unit Test Suite">
-            <directory>./tests/Bucketable/Unit/</directory>
+            <directory>./tests/unit/BucketableUnitTest/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

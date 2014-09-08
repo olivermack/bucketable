@@ -32,7 +32,64 @@ namespace Bucketable;
  * @package bucketable
  * @author  Oliver Mack
  */
-class Bucket implements Bucketable
+interface Bucketable extends
+    \ArrayAccess,
+    \IteratorAggregate,
+    \Countable
 {
-    use BucketableTrait;
+    /**
+     * Sets $data for the given $key
+     *
+     * @param string $key
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    public function setKey($key, $data);
+
+    /**
+     * Gets the value of the given $key
+     *
+     * Returns $default if $key does not exist
+     *
+     * @param  string $key
+     * @param  mixed  $default
+     *
+     * @return mixed|null
+     */
+    public function getKey($key, $default = null);
+
+    /**
+     * Checks if the given $key exists
+     *
+     * @param  string $key
+     *
+     * @return boolean
+     */
+    public function hasKey($key);
+
+    /**
+     * Removes the given $key from the storage
+     *
+     * @param  string $key
+     *
+     * @return $this
+     */
+    public function removeKey($key);
+
+    /**
+     * Checks if the given $key is not set or is empty
+     *
+     * @param  string $key
+     *
+     * @return boolean
+     */
+    public function keyIsEmpty($key);
+
+    /**
+     * Checks if the storage is empty
+     *
+     * @return boolean
+     */
+    public function isEmpty();
 }
