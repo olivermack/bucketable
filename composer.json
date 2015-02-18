@@ -1,5 +1,5 @@
 {
-    "name": "bucketable/bucketable",
+    "name": "olivermack/bucketable",
     "type": "library",
     "description": "Provides simple behavior for data buckets",
     "keywords": ["behavior", "data", "container"],
@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "Oliver Mack",
-            "email": "mail@oliver-mack.com"
+            "email": "dev@oliver-mack.com"
         }
     ],
     "require": {
